@@ -14,7 +14,7 @@ include("components/header.php");
                                    
                                 </div>
                                 <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">category image</label>
+                                       <label for="exampleInputPassword1" class="form-label">category image</label>
                                     <input type="file" class="form-control" id="exampleInputPassword1" name="catImage">
                                 </div>
                                

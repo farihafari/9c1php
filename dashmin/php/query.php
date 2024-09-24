@@ -1,5 +1,7 @@
 <?php
 include("connection.php");
+// addresses
+$categoryImageAddress = 'img/categories/';
 if(isset($_POST['addCategory'])){
     $catName = $_POST['catName'];
     $catImageName= $_FILES['catImage']['name'];
@@ -16,6 +18,10 @@ if(isset($_POST['addCategory'])){
             alert('category add successfully')
             </script>";
         }
+    }else{
+        echo "<script>
+            alert('inavlid extension type')
+            </script>";
     }
 }
 ?>
