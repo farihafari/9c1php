@@ -18,6 +18,7 @@ include("components/header.php");
                                 <tbody>
                                   <?php
                                   $query = $pdo ->query("select * from categories");
+                               
                                   $row = $query->fetchAll(PDO::FETCH_ASSOC);
                                   foreach($row as $catRows){
                                     ?>
