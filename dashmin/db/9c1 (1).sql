@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 26, 2024 at 09:41 AM
+-- Generation Time: Oct 03, 2024 at 09:59 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -38,7 +38,8 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`catId`, `catName`, `catImage`) VALUES
-(2, 'fashion inn', 'images.png');
+(3, 'skin care', 'download.jpg'),
+(4, 'abbayas', 'tshirt2.jpg');
 
 -- --------------------------------------------------------
 
@@ -55,6 +56,36 @@ CREATE TABLE `products` (
   `productDescription` varchar(100) NOT NULL,
   `productImage` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`productId`, `productName`, `productPrice`, `productQuantity`, `productCatId`, `productDescription`, `productImage`) VALUES
+(3, 'arabic abayas', 6500, 9, 4, 'sjadjkfkj', 'logo.png'),
+(4, 'arabic abayas', 6500, 9, 4, 'sjadjkfkj', 'logo.png');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `userId` int(11) NOT NULL,
+  `userName` varchar(20) NOT NULL,
+  `userEmail` varchar(50) NOT NULL,
+  `userPassword` varchar(20) NOT NULL,
+  `userNumber` varchar(13) NOT NULL,
+  `userRole` varchar(20) NOT NULL DEFAULT 'user'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`userId`, `userName`, `userEmail`, `userPassword`, `userNumber`, `userRole`) VALUES
+(1, 'Admin', 'admin@gmail.com', 'admin123', '52563576', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -74,6 +105,12 @@ ALTER TABLE `products`
   ADD KEY `productCatId` (`productCatId`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`userId`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -81,13 +118,19 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `catId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `catId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `productId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `productId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables

@@ -144,4 +144,12 @@ $query->execute();
 echo "<script>alert('product Updated into table')</script>";
     }
 }
+// DeleteProduct
+if(isset($_POST['DeleteProduct'])){
+    $pId = $_POST['proId'];
+    $query= $pdo ->prepare("delete from products where productId = :pid");
+    $query->bindParam("pid",$pId);
+    $query->execute();
+    echo "<script>alert('product deleted')</script>";
+}
 ?>

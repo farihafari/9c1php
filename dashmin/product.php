@@ -45,7 +45,7 @@ FROM `products`
               <td><?php echo $proRows['catName'] ?></td>
               <td><img src="<?php echo $proImageAddress . $proRows['productImage'] ?>" width="80"></td>
               <td><a href="#modupdate<?php echo $proRows['productId']?>" data-bs-toggle="modal" class="btn btn-success">Edit</a></td>
-              <td><a href="" class="btn btn-danger">Delete</a></td>
+              <td><a href="#modDelete<?php echo $proRows['productId']?>" class="btn btn-danger" data-bs-toggle="modal">Delete</a></td>
             </tr>
 
 
@@ -122,6 +122,32 @@ FROM `products`
   </div>
 </div>
      <!--update  Modal -->
+
+     <!--Delete  Modal -->
+<div class="modal fade" id="modDelete<?php echo $proRows['productId']?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">ADD PRODUCTS</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="mx-3" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="proId" value="<?php echo $proRows['productId']?>" id="">
+      
+
+          <button type="submit" class="btn btn-primary" name="DeleteProduct">Delete Product</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+     <!--Delete  Modal -->
             <?php
           }
           ?>
