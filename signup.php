@@ -1,5 +1,5 @@
 <?php
-include("components/header.php")
+include("webcomponents/header.php")
 ?>
 
 	<!-- Title page -->
@@ -57,5 +57,5 @@ include("components/header.php")
 
 
 <?php
-include("components/footer.php")
+include("webcomponents/footer.php");
 ?>

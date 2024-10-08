@@ -1,5 +1,7 @@
 <?php
+// session_start();
 include("connection.php");
+
 // addresses
 $categoryImageAddress = 'img/categories/';
 $proImageAddress = "img/products/";

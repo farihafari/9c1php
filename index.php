@@ -1,5 +1,5 @@
 <?php
-include("components/header.php")
+include("webcomponents/header.php")
 ?>
 	<!-- Slider -->
 	<section class="section-slide">
@@ -939,5 +939,5 @@ include("components/header.php")
 	</section>
 
 <?php
-include("components/footer.php")
+include("webcomponents/footer.php")
 ?>

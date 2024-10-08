@@ -1,4 +1,10 @@
-<?php include('php/query.php')?>
+<?php include('php/query.php');
+if($_SESSION['userrole']!="admin"){ 
+    echo "<script>location.assign('../index.php')</script>";
+
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 

@@ -1,6 +1,6 @@
 <?php
 include("components/header.php");
-include("php/query.php");
+
 ?>
             <!-- Sale & Revenue Start -->
             <div class="container-fluid pt-4 px-4">
