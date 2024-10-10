@@ -106,9 +106,39 @@ include("model/query.php");
 							<li>
 								<a href="contact.html">Contact</a>
 							</li>
-                            <li>
+<?php
+if(isset($_SESSION['username'])){
+	if($_SESSION['userrole']=="admin"){
+		?>
+		<li>
+								<a href="dashmin/profile.php">Profile</a>
+							</li>
+		<?php
+	}else{
+		?>
+		<li>
+								<a href="profile.php">Profile</a>
+							</li>
+		<?php
+	}
+	?>
+	
+	 <li>
+								<a href="logout.php">Logout</a>
+							</li>
+	<?php
+}else{
+	?>
+	 <li>
 								<a href="signup.php">Register</a>
 							</li>
+							<li>
+								<a href="signin.php">Login</a>
+							</li>
+	<?php
+}
+?>
+                           
 						</ul>
 					</div>	
 

@@ -1,14 +1,14 @@
 <?php
 // session_start();
 include("dashmin/php/connection.php");
-
+$categoryImageAddress = 'dashmin/img/categories/';
 // session_unset();
 // resgiteration
 if(isset($_POST['registration'])){
     $uname = $_POST['uname'];
     $uemail = $_POST['uemail'];
     $upassword = $_POST['upassword'];
-    $passwordHash = sha1($upassword);
+    $passwordHash = sha1(string: $upassword);
     $unumber = $_POST['unumber'];
     // check email 
     $checkEmail = $pdo ->prepare("select * from users where userEmail = :pemail");
@@ -43,7 +43,7 @@ if(isset($_POST['logIn'])){
     $query->bindParam("pe",$uemail);
     $query->bindParam("pp",$passwordHash);
     $query->execute();
-    $result = $query->fetch(PDO::FETCH_ASSOC);
+    $result = $query->fetch(mode: PDO::FETCH_ASSOC);
     // var_dump($result);
     // echo   $passwordHash;
     // die();
