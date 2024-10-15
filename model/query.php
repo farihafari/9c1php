@@ -2,6 +2,7 @@
 // session_start();
 include("dashmin/php/connection.php");
 $categoryImageAddress = 'dashmin/img/categories/';
+$proImageAddress = "dashmin/img/products/";
 // session_unset();
 // resgiteration
 if(isset($_POST['registration'])){

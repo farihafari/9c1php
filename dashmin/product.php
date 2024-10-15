@@ -195,16 +195,18 @@ FROM `products`
           </div>
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Product Category</label>
-            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="proCatId">
+            <select class="form-select" id="floatingSelect" aria-label=" label select example" name="proCatId">
 
               <option selected>Open this select menu</option>
               <?php
-              $querycat = $pdo->query("select * from categories");
-              $rowcat = $querycat->fetchAll(PDO::FETCH_ASSOC);
-              foreach ($row as $cat) {
+              $addquerycat = $pdo->query("select * from categories");
+              $addrowcat = $addquerycat->fetchAll(PDO::FETCH_ASSOC);
+            //  print_r($rowcat);
+            //   die();
+              foreach ($addrowcat as $addCat){
                 ?>
 
-                <option value="<?php echo $cat['catId'] ?>"><?php echo $cat['catName'] ?></option>
+                <option value="<?php echo $addCat["catId"]?>"><?php echo $addCat['catName'] ?></option>
                 <?php
               }
               ?>
