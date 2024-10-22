@@ -267,7 +267,7 @@ foreach($rowsCat as $allCat){
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
-								<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+								<a href="product-detail.php?proId=<?php  echo $catVal['productId']?>" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 								<?php echo $catVal['productName']?>
 								</a>
 
@@ -303,7 +303,7 @@ foreach($rowsCat as $allCat){
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
-								<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+								<a href="product-detail.php?proId=<?php  echo $allProducts['productId']?>" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 								<?php echo $allProducts['productName']?>
 								</a>
 

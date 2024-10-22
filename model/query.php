@@ -71,4 +71,20 @@ if(isset($_POST['logIn'])){
 
     }
 }
+// addToCart
+if(isset($_POST['addToCart'])){
+    $pId = $_POST['pId'];
+    $pName = $_POST['pName'];
+    $pQuantity = $_POST['pQuantity'];
+    $pPrice = $_POST['pPrice'];
+    $pImage = $_POST['pImage'];
+    if(isset($_SESSION['cart'])){
+
+    }else{
+        $_SESSION['cart'][0]=array("proId"=>$pId,"proName"=>$pName,"proPrice"=>$pPrice,"proQuantity"=>$pQuantity,"proImage"=>$pImage);
+        echo "<script>alert('product add into cart')</script>";
+    }
+
+
+}
 ?>
