@@ -79,9 +79,23 @@ if(isset($_POST['addToCart'])){
     $pPrice = $_POST['pPrice'];
     $pImage = $_POST['pImage'];
     if(isset($_SESSION['cart'])){
-
+        $cartCount = false;
+foreach($_SESSION['cart'] as $keys => $values){
+    if($values['proId']== $pId){
+$_SESSION['cart'][$keys]['proQuantity']+=$pQuantity;
+$cartCount= true;
+echo "<script>alert('cart updated')</script>";
+    }
+}
+if(!$cartCount){
+    $cartLength = count($_SESSION['cart']);
+    $_SESSION['cart'][$cartLength]=array("proId"=>$pId,"proName"=>$pName,"proPrice"=>$pPrice,"proQuantity"=>$pQuantity,
+    "proImage"=>$pImage);
+    echo "<script>alert('product add into cart')</script>";
+}
     }else{
-        $_SESSION['cart'][0]=array("proId"=>$pId,"proName"=>$pName,"proPrice"=>$pPrice,"proQuantity"=>$pQuantity,"proImage"=>$pImage);
+        $_SESSION['cart'][0]=array("proId"=>$pId,"proName"=>$pName,"proPrice"=>$pPrice,"proQuantity"=>$pQuantity,
+        "proImage"=>$pImage);
         echo "<script>alert('product add into cart')</script>";
     }
 
