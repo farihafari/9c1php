@@ -1,6 +1,18 @@
 <?php
 // session_start();
 include("dashmin/php/connection.php");
+//Import PHPMailer classes into the global namespace
+//These must be at the top of your script, not inside a function
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+//Load Composer's autoloader
+require 'vendor/autoload.php';
+
+//Create an instance; passing `true` enables exceptions
+$mail = new PHPMailer(true);
+
 $categoryImageAddress = 'dashmin/img/categories/';
 $proImageAddress = "dashmin/img/products/";
 // session_unset();
@@ -50,6 +62,7 @@ if(isset($_POST['logIn'])){
     // die();
     if($result){
         echo "<script>alert('login')</script>";
+        $_SESSION['userid']=$result['userId'];
         $_SESSION['username']=$result['userName'];
         $_SESSION['useremail']=$result['userEmail'];
         $_SESSION['userpassword']=$result['userPassword'];
@@ -99,6 +112,99 @@ if(!$cartCount){
         echo "<script>alert('product add into cart')</script>";
     }
 
+
+}
+// delete product session cart
+if(isset($_POST['removeItem'])){
+    $pId = $_POST['proId'];
+    foreach($_SESSION['cart'] as $key => $values){
+        if($values['proId']==$pId){
+            unset($_SESSION['cart'][$key]);
+            $_SESSION['cart']=array_values($_SESSION['cart']);
+            echo "<script>
+            alert('item deleted from cart');
+            location.assign('shoping-cart.php')
+            </script>";
+
+        }
+    }
+}
+// order place
+if(isset($_POST['placeOrder'])){
+    $userId = $_SESSION['userid'];
+    $username = $_POST['name'];
+    $useremail = $_POST['email'];
+    $userphone = $_POST['phone'];
+    $useraddress = $_POST['address'];
+    date_default_timezone_set("Asia/Karachi");
+    $current = time();
+    $date = date("Y-m-d H:i:s",$current);
+    $time = date("H:i:s",strtotime($date));
+    function Confirmation(){
+        $randCode = rand(1,999999);
+        return "#OD".$randCode;
+    }
+    $confirmationCode = Confirmation();
+    $itemCount =1;
+    $productNames =[];
+    $allQuantities = 0;
+    $subTotal=0;
+    foreach($_SESSION['cart'] as $keys =>$values){
+        $itemCount +=$keys;
+$productNames[]=$values['proName'];
+$allQuantities+=$values['proQuantity'];
+$subTotal +=$values['proQuantity']*$values['proPrice'];
+        // order query
+$orderQuery= $pdo ->prepare("INSERT INTO `orders`(`productId`,`productName`, `productPrice`, `productQuantity`, `userId`, `userName`, `userEmail`, `userPhone`, `userAddress`, `date`, `time`, `confirmationCode`, `productImage`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
+$orderQuery->execute([$values['proId'],$values['proName'],$values['proPrice'],$values['proQuantity'],$userId,$username,$useremail,$userphone,$useraddress,$date,$time,$confirmationCode,$values['proImage']]);
+
+    }
+    $nameString = implode(",",$productNames);
+
+    // invoice query 
+$invoiceQuery = $pdo ->prepare("INSERT INTO `invoices`(`userId`, `userEmail`, `productsName`, `itemCount`, `productQuantities`, `totalAmount`, `date`, `time`, `confirmationCode`) VALUES(?,?,?,?,?,?,?,?,?)");
+$invoiceQuery->execute([$userId,$useremail,$nameString,$itemCount,$allQuantities,$subTotal,$date,$time,$confirmationCode]);
+unset($_SESSION['cart']);
+echo "<script>
+alert('order place');
+location.assign('index.php');
+</script>";
+
+// mailing
+try {
+    //Server settings
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+    $mail->isSMTP();                                            //Send using SMTP
+    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+    $mail->Username   = 'fareehajabeen62@gmail.com';                     //SMTP username
+    $mail->Password   = 'kzsuekvhophocawi';                               //SMTP password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+    //Recipients
+    $mail->setFrom('fareehajabeen62@gmail.com', 'cozaStore');
+    $mail->addAddress($_SESSION['useremail'], $_SESSION['username']);     //Add a recipient
+    // $mail->addAddress('ellen@example.com');               //Name is optional
+    // $mail->addReplyTo('info@example.com', 'Information');
+    // $mail->addCC('cc@example.com');
+    // $mail->addBCC('bcc@example.com');
+
+    //Attachments
+    // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+    // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+
+    //Content
+    $mail->isHTML(true);                                  //Set email format to HTML
+    $mail->Subject = 'Order Confirmation';
+    $mail->Body    = 'Dear '.$_SESSION['username'].' thank you for shopping your order confirmation code is '.$confirmationCode.'!</b>';
+    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+    $mail->send();
+    echo 'Message has been sent';
+} catch (Exception $e) {
+    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+}
 
 }
 ?>
