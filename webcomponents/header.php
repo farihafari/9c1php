@@ -36,8 +36,29 @@ include("model/query.php");
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <!--===============================================================================================-->
 </head>
+<script>
+	$(document).ready(function() {
+		$("#search").on("keyup",function() {
+let search = $(this).val();
+$.ajax({
+	url :"model/query.php",
+	type:"post",
+	data:{
+		"searchproduct":search
+	},
+	success:function(response){
+		// console.log(response);
+		$("#productData").html(response)
+	}
+
+})			
+		})
+		
+	})
+</script>
 <body class="animsition">
 	
 	<!-- Header -->
